@@ -16,3 +16,4 @@ enable_testing()
 
 add_subdirectory(example)
 add_subdirectory(uebungen)
+add_subdirectory(build_system)
