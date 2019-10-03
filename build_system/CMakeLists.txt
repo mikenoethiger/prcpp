@@ -11,3 +11,10 @@ add_executable(${project_name}_app
 target_include_directories(${project_name}_app PRIVATE src)
 # does not work with me if following line is active
 #target_compile_options(${project_name}_app PRIVATE ${cxxflags})
+
+add_executable(${project_name}_test
+        src/student.cpp
+        src/module.cpp
+        unittest/main.cpp
+        unittest/student_test.cpp)
+target_include_directories(${project_name}_test PRIVATE src)
