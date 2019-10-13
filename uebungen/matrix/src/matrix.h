@@ -2,7 +2,7 @@
 
 #include <cstddef>
 
-// #define OPERATIONS_MULTIPLY
+#define OPERATIONS_MULTIPLY
 // #define OPERATIONS_POWER
 // #define OPERATIONS_MULTIPLY_FAST
 // #define OPERATIONS_POWER_FAST
@@ -45,6 +45,8 @@ class Matrix {
   /// \param other The instance to compare with.
   /// \return \c True if dimension and all values do match.
   bool Equals(const Matrix& other) const;
+
+  void Print() const;
 
 #ifdef OPERATIONS_MULTIPLY
   /// \brief Multiply two matrices.
