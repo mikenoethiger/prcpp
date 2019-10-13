@@ -3,6 +3,12 @@
 #include <student.h>
 
 int main(int argc, char* argv[]) {
+  int a = 1;
+  int b = 2;
+  a = b = 3;
+  std::cout << "a: " << a;
+  std::cout << "b: " << b;
+
   Module m1(3, "LAG");
   Module m2(3, "MGLI");
   Module m3(3, "EANA");

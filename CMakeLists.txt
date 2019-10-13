@@ -5,7 +5,7 @@ project(prcpp_workspace)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 # predefined compile flags
-set(cxxflags -Werror -Wall -Wextra -Wconversion -Wpedantic -Wno-psabi -Wno-unused-parameter -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function)
+#set(cxxflags -Werror -Wall -Wextra -Wconversion -Wpedantic -Wno-psabi -Wno-unused-parameter -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function)
 
 # use C++17 standard with gcc extensions
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -18,3 +18,4 @@ add_subdirectory(example)
 add_subdirectory(uebungen)
 add_subdirectory(build_system)
 add_subdirectory(preprocessor)
+add_subdirectory(pointer_und_referenzen)

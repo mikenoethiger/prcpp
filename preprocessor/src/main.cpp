@@ -26,7 +26,12 @@ void memoryUsage() {
 
 int main(int argc, char* argv[]) {
   //makro();
-  memoryUsage();
+  //memoryUsage();
+  int a = 1;
+  int b = 2;
+  a = b = 3;
+  std::cout << "a: " << a;
+  std::cout << "b: " << b;
 
   return EXIT_SUCCESS;
 }
