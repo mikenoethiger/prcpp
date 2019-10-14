@@ -95,6 +95,57 @@ Matrix Matrix::Multiply(const Matrix& other) const {
   return res;
 }
 
+/// Space Allocation:
+/// 2x the space that was needed for the source matrix will be additionally allocated.
+/// This space is used to execute the full power calculation, independent of size k.
+Matrix Matrix::Power(size_t k) const {
+  assert(k > 1 && horizontal_ == vertical_);
+
+  Matrix result(*this);
+  Matrix intermediate(horizontal_, horizontal_);
+
+  for (size_t i = 1; i < k; i++) {
+    MultiplyIntern(this->data_, result.data_, intermediate.data_, horizontal_, horizontal_, horizontal_);
+    // swap pointers
+    double* tmp = result.data_;
+    result.data_ = intermediate.data_;
+    intermediate.data_ = tmp;
+  }
+
+  return result;
+}
+
+void Matrix::MultiplyInternFast(const double* __restrict a,
+                                const double* __restrict b,
+                                double* __restrict res,
+                                size_t a_vertical,
+                                size_t b_horizontal,
+                                size_t between) {
+  double* row = res;
+  for (size_t r = 0; r < a_vertical; ++r) {
+    for (size_t c = 0; c < b_horizontal; ++c) {
+      double sum = 0;
+      for (size_t i = 0; i < between; ++i) {
+        double a_val = a[r*between+i];
+        double b_val = b[c+b_horizontal*i];
+        sum += a_val * b_val;
+      }
+      res[c] = sum;
+    }
+    res += b_horizontal;
+  }
+}
+
+Matrix Matrix::MultiplyFast(const Matrix& other) const {
+  assert(horizontal_ == other.vertical_);
+  size_t a_vertical = vertical_;
+  size_t b_horizontal = other.horizontal_;
+  size_t between = horizontal_;
+  Matrix res(a_vertical, b_horizontal);
+  MultiplyIntern(data_, other.data_, res.Data(), a_vertical, b_horizontal, between);
+  return res;
+}
+
 void Matrix::Print() const {
   double* row = data_;
   for (size_t m = 0; m < vertical_; ++m) {
