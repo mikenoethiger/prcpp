@@ -103,11 +103,14 @@ Matrix Matrix::Power(size_t k) const {
 
   Matrix result(*this);
   Matrix intermediate(horizontal_, horizontal_);
+  double* tmp;
 
   for (size_t i = 1; i < k; i++) {
     MultiplyIntern(this->data_, result.data_, intermediate.data_, horizontal_, horizontal_, horizontal_);
     // swap pointers
-    double* tmp = result.data_;
+    // use data stored in intermediate as new result
+    // and data stored in result as new intermediate (since deprecated)
+    tmp = result.data_;
     result.data_ = intermediate.data_;
     intermediate.data_ = tmp;
   }
@@ -124,12 +127,20 @@ void Matrix::MultiplyInternFast(const double* __restrict a,
   size_t pivotA = 0;
   size_t pivotB = 0;
   size_t pivotR = 0;
-  double product;
+  // Für jede Zeile in A, iteriere ich einmal komplett (sequentiell) durch B.
+  // Dabei multipliziere ich das erste Element in der A Zeile mit allen Elementen
+  // der ersten Zeile von B. Dann das zweite Element in in Zeile A mit allen
+  // Elementen aus der zweiten Zeile von B. Immer so weiter, bis ich die erste
+  // Zeile von A abgearbeitet habe (zu diesem Zeitpunkt bin ich am Ende von B angelangt).
+  // Dann wiederhole ich den Vorgang für alle weiteren Zeilen von A.
+  // Jede Multiplikation von einem Element aus A und B, wird in der resultierenden
+  // Matrix an einer bestimmten Position aufsummiert. Diese ergibt sich aus:
+  // - Zeile in der sich Element aus A befindet wird Zeile in res
+  // - Spalte in der sich Element aus B befindet, wird Spalte in res
   for (size_t i = 0; i < a_vertical; ++i) {
     for (size_t j = 0; j < between; ++j) {
       for (size_t k = 0; k < b_horizontal; k++) {
-        product = a[pivotA]*b[pivotB];
-        res[pivotR] += product;
+        res[pivotR] += a[pivotA]*b[pivotB];
         pivotB++;
         pivotR++;
       }
