@@ -121,18 +121,23 @@ void Matrix::MultiplyInternFast(const double* __restrict a,
                                 size_t a_vertical,
                                 size_t b_horizontal,
                                 size_t between) {
-  double* row = res;
-  for (size_t r = 0; r < a_vertical; ++r) {
-    for (size_t c = 0; c < b_horizontal; ++c) {
-      double sum = 0;
-      for (size_t i = 0; i < between; ++i) {
-        double a_val = a[r*between+i];
-        double b_val = b[c+b_horizontal*i];
-        sum += a_val * b_val;
+  size_t pivotA = 0;
+  size_t pivotB = 0;
+  size_t pivotR = 0;
+  double product;
+  for (size_t i = 0; i < a_vertical; ++i) {
+    for (size_t j = 0; j < between; ++j) {
+      for (size_t k = 0; k < b_horizontal; k++) {
+        product = a[pivotA]*b[pivotB];
+        res[pivotR] += product;
+        pivotB++;
+        pivotR++;
       }
-      res[c] = sum;
+      pivotR -= b_horizontal;
+      pivotA++;
     }
-    res += b_horizontal;
+    pivotB = 0; // start again at b
+    pivotR += b_horizontal; // next result row
   }
 }
 
@@ -142,7 +147,8 @@ Matrix Matrix::MultiplyFast(const Matrix& other) const {
   size_t b_horizontal = other.horizontal_;
   size_t between = horizontal_;
   Matrix res(a_vertical, b_horizontal);
-  MultiplyIntern(data_, other.data_, res.Data(), a_vertical, b_horizontal, between);
+  res.SetAll(0);
+  MultiplyInternFast(data_, other.data_, res.Data(), a_vertical, b_horizontal, between);
   return res;
 }
 

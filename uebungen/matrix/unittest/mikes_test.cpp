@@ -31,9 +31,11 @@ TEST_CASE("Mikes Test", "[Matrix]") {
     SECTION("Set all to 0.0") {
       std::vector<double> expected(size, 0);
       Matrix m1(2, 2);
+      Matrix m2(2, 2);
       m1.SetAll(2);
-      Matrix m2 = m1.Power(2);
-      m2.Print();
+      m2.SetAll(2);
+      Matrix m3 = m1.MultiplyFast(m2);
+      m3.Print();
     }
   }
 }
