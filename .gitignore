@@ -76,3 +76,5 @@ fabric.properties
 # Custom
 build
 .idea/.name
+
+**.DS_Store
