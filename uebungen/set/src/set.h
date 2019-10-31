@@ -5,11 +5,11 @@
 #include <ostream>
 #include <initializer_list>
 
-// #define OPERATION_MERGE
-// #define OPERATION_INTERSECTION
-// #define OPERATION_DIFFERENCE
-// #define OPERATION_INTERSECTION_MOVE
-// #define OPERATION_DIFFERENCE_MOVE
+#define OPERATION_MERGE
+#define OPERATION_INTERSECTION
+#define OPERATION_DIFFERENCE
+#define OPERATION_INTERSECTION_MOVE
+#define OPERATION_DIFFERENCE_MOVE
 
 class Set {
  public:
@@ -20,6 +20,9 @@ class Set {
   Set(const std::initializer_list<int>& list);
 
   virtual ~Set();
+
+  /// \brief TMP FUNCTION FOR DEBUGGING, REMOVE WHEN FINISHED
+  void RemoveDebug(int e);
 
   /// \brief Get the number of elements managed by this instance.
   size_t size() const { return size_; }
@@ -106,6 +109,14 @@ class Set {
   /// \brief Internal helper to access the element at a specific address in memory without range checks.
   int& AtUnchecked(size_t i);
   int AtUnchecked(size_t i) const;
+
+  /// \brief Internal helper to move the begin() pointer to the element "e" or to end() if the element
+  /// does not exist.
+  int* MoveIteratorTo(int e) const;
+
+  /// \brief Get a unique identifier name for every Set instance can be used to distinct Set instances when
+  /// function calls are traced.
+  std::string GetIdentifierName() const;
 
 #ifdef OPERATION_MERGE
   /// \brief Return the union of the this and other set.

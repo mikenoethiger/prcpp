@@ -1,5 +1,6 @@
 #include <catch2/catch.hpp>
 
+#include <iostream>
 #include "set.h"
 
 TEST_CASE("Set Test", "[Set]") {

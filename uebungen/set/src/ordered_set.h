@@ -5,9 +5,9 @@
 
 #include "set.h"
 
-// #define ORDERED_SET_BASE
-// #define ORDERED_SET_GET_SMALLER
-// #define ORDERED_SET_GET_LARGER
+#define ORDERED_SET_BASE
+#define ORDERED_SET_GET_SMALLER
+#define ORDERED_SET_GET_LARGER
 // #define ORDERED_SET_MERGE
 
 #ifdef ORDERED_SET_BASE
@@ -40,6 +40,8 @@ class OrderedSet : public Set {
 
  private:
   void SortIntern();
+  /// \brief Get the index of an element or SIZE_MAX if element does not exist.
+  size_t IndexOf(int e) const;
 
   size_t start_;
 };
