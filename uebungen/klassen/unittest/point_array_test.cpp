@@ -43,23 +43,23 @@ TEST_CASE("PointArray Tests", "[PointArray]") {
   /*SECTION("Clear") {
     pa2.Clear();
 
-    std::cout << "size test" << std::endl;
+    std::cout << "size unittest" << std::endl;
     std::cout << std::boolalpha << (pa1.Size() == 0) << std::endl;
     std::cout << std::boolalpha << (pa2.Size() == 0) << std::endl;
     std::cout << std::boolalpha << (pa3.Size() == 4) << std::endl;
 
-    std::cout << "push-back test" << std::endl;
+    std::cout << "push-back unittest" << std::endl;
     pa3.PushBack(Point(5, 6));
     pa3.Print();
 
-    std::cout << "remove test" << std::endl;
+    std::cout << "remove unittest" << std::endl;
     pa3.Remove(5);
     pa3.Remove(4);
     pa3.Remove(0);
     pa3.Remove(1);
     pa3.Print();
 
-    std::cout << "insert test" << std::endl;
+    std::cout << "insert unittest" << std::endl;
     pa3.Insert(0, p1);
     pa3.Insert(2, p3);
     pa3.Insert(4, Point(5, 6));

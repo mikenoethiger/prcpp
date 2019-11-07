@@ -201,7 +201,7 @@ Syntax: cpplint.py [--verbose=#] [--output=emacs|eclipse|vs7|junit]
       Examples:
         --exclude=one.cc
         --exclude=src/*.cc
-        --exclude=src/*.cc --exclude=test/*.cc
+        --exclude=src/*.cc --exclude=unittest/*.cc
 
     extensions=extension,extension,...
       The allowed file extensions that cpplint will check
@@ -536,7 +536,7 @@ _TYPES = re.compile(
 _THIRD_PARTY_HEADERS_PATTERN = re.compile(
     r'^(?:[^/]*[A-Z][^/]*\.h|lua\.h|lauxlib\.h|lualib\.h)$')
 
-# Pattern for matching FileInfo.BaseName() against test file name
+# Pattern for matching FileInfo.BaseName() against unittest file name
 _test_suffixes = ['_test', '_regtest', '_unittest']
 _TEST_FILE_SUFFIX = '(' + '|'.join(_test_suffixes) + r')$'
 
@@ -2204,7 +2204,7 @@ def CheckForHeaderGuard(filename, clean_lines, error):
 def CheckHeaderFileIncluded(filename, include_state, error):
   """Logs an error if a source file does not include its header."""
 
-  # Do not check test files
+  # Do not check unittest files
   fileinfo = FileInfo(filename)
   if Search(_TEST_FILE_SUFFIX, fileinfo.BaseName()):
     return
@@ -2986,8 +2986,8 @@ class NestingState(object):
       filename: The name of the current file.
       error: The function to call with any errors found.
     """
-    # Note: This test can result in false positives if #ifdef constructs
-    # get in the way of brace matching. See the testBuildClass test in
+    # Note: This unittest can result in false positives if #ifdef constructs
+    # get in the way of brace matching. See the testBuildClass unittest in
     # cpplint_unittest.py for an example of this.
     for obj in self.stack:
       if isinstance(obj, _ClassInfo):
@@ -3792,7 +3792,7 @@ def CheckBracesSpacing(filename, clean_lines, linenum, nesting_state, error):
   # an initializer list, for instance), you should have spaces before your
   # braces when they are delimiting blocks, classes, namespaces etc.
   # And since you should never have braces at the beginning of a line,
-  # this is an easy test.  Except that braces used for initialization don't
+  # this is an easy unittest.  Except that braces used for initialization don't
   # follow the same rule; we often don't want spaces before those.
   match = Match(r'^(.*[^ ({>]){', line)
 
@@ -4538,7 +4538,7 @@ def CheckStyle(filename, clean_lines, linenum, file_extension, nesting_state,
                error):
   """Checks rules from the 'C++ style rules' section of cppguide.html.
 
-  Most of these rules are hard to test (naming, comment style), but we
+  Most of these rules are hard to unittest (naming, comment style), but we
   do what we can.  In particular we check for 2-space indents, line lengths,
   tab usage, spaces inside code, etc.
 
@@ -4933,7 +4933,7 @@ def CheckLanguage(filename, clean_lines, linenum, file_extension,
                   include_state, nesting_state, error):
   """Checks rules from the 'C++ language rules' section of cppguide.html.
 
-  Some of these rules are hard to test (function overloading, using
+  Some of these rules are hard to unittest (function overloading, using
   uint32 inappropriately), but we do the best we can.
 
   Args:
