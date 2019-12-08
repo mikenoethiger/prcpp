@@ -1,3 +1,4 @@
 add_subdirectory(input_output)
 add_subdirectory(vererbung)
 add_subdirectory(smart_pointer)
+add_subdirectory(linked_list)
