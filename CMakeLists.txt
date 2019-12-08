@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 
+# In order to resolve third party dependencies such as catch2
+include_directories(/usr/local/include)
+
 project(prcpp_workspace)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
@@ -21,3 +24,5 @@ add_subdirectory(preprocessor)
 add_subdirectory(pointer_und_referenzen)
 add_subdirectory(playground)
 add_subdirectory(arbeitsblaetter)
+
+
