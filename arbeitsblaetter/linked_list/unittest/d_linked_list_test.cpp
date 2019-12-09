@@ -1,31 +1,35 @@
 #include <catch2/catch.hpp>
+#include <iostream>
 
 #include "d_linked_list.h"
 
 TEST_CASE("DLinkedList Test") {
   SECTION("int list") {
+    REQUIRE(true);
     using T = int;
     DLinkedList<T> list;
     REQUIRE(list.size() == 0);
 
-    Item<T> item1 = list.addBack(1);
-    REQUIRE(item1.data_ == 1);
+    auto& item1 = list.addBack(1);
+    REQUIRE(item1.getData() == 1);
     list.addBack(2);
-    Item<T> item2 = list.addBack(3);
+    auto& item2 = list.addBack(3);
     REQUIRE(list.size() == 3);
 
-    Item<T> head = list.getHead();
+    auto& head = list.getHead();
+
     REQUIRE(head == item1);
-    Item<T> tail = list.getTail();
+    auto& tail = list.getTail();
+
     REQUIRE(tail == item2);
 
-    Item<T> item3 = list.cyclicNext(head);
-    item3 = list.cyclicNext(head);
-    REQUIRE(item3.data_ == 3);
-    item3 = list.cyclicNext(head);
-    REQUIRE(item3 == head);
+    auto& item3 = list.cyclicNext(head);
+    auto& item4 = list.cyclicNext(item3);
+    REQUIRE(item4.getData() == 3);
+    auto& item5 = list.cyclicNext(item4);
+    REQUIRE(item5 == head);
 
-    item3 = list.cyclicPrevious(head);
-    REQUIRE(item3 == tail);
+    auto& item6 = list.cyclicPrevious(head);
+    REQUIRE(item6 == tail);
   }
 }
